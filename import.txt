@@ -1,0 +1,24 @@
+Importer importer=new Importer();
+        Document document=new Document();
+        try {
+            document=importer.importDocument("C:/users/nagyb/IdeaProjects/Petrinet2/newmodel.xml");
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        PetrinetTransformer petrinetTransformer=new PetrinetTransformer();
+        PetriNet petriNet=new PetriNet();
+        try {
+            petriNet=petrinetTransformer.transform(document);
+        }
+        catch(SameVertexTypeException | BadArcWeightException e) {
+            e.printStackTrace();
+        }
+
+        GraphicsTransformer graphicsTransformer=new GraphicsTransformer();
+        graphicsTransformer.setNet(petriNet);
+        HashMap<Long,Drawable> drawables=new HashMap<>();
+        drawables=graphicsTransformer.transform(document);
+
